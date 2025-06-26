@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Bogotá | Asistente Virtual con IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Bogotá Corporate Colors -->
+    <!-- Application Structure Plan: Se ha diseñado una aplicación de una sola página con desplazamiento vertical (scrolling) y una barra de navegación fija. Esta estructura narrativa guía al usuario a través de la historia del proyecto de forma lógica: 1. Oportunidad (el problema), 2. Solución (la propuesta de IA), 3. Validación (resultados interactivos del experimento), 4. Impacto (beneficios tangibles), y 5. Futuro (próximos pasos). Se eligió esta estructura porque convierte un informe estático en una historia atractiva y fácil de digerir. La interactividad se centra en la sección de datos para maximizar el engagement y la comprensión de los resultados clave. -->
+    <!-- Visualization & Content Choices: 
+        - Título de Marca: (Goal: Inform/Brand) Se ha eliminado el logo de imagen a petición del usuario. Se vuelve a un título de texto ("Banco de Bogotá") para una apariencia más limpia y minimalista, manteniendo la identidad de la marca de forma sutil.
+        - Oportunidad/Solución: (Goal: Inform) Se usa texto claro con diagramas simples creados con HTML/Tailwind para visualizar los flujos conceptuales, evitando la complejidad.
+        - Validación: (Goal: Compare/Inform) La información clave del experimento se presenta con un gráfico de dona (Donut Chart) usando Chart.js. Los colores se han actualizado para usar el amarillo y rojo corporativos (#FFCD00, #E30613) junto con el azul, alineándose con la identidad de marca completa. Se complementa con contadores numéricos animados con JS para resaltar las cifras de impacto.
+        - Impacto: (Goal: Compare) Se utiliza un diseño de tarjetas en una cuadrícula (HTML/Tailwind). Cada tarjeta representa un área de beneficio y utiliza íconos Unicode para una rápida asimilación visual.
+        - Futuro: (Goal: Inform) Una lista simple y clara presenta los siguientes pasos de forma directa.
+        - Justification: Esta combinación de texto, diagramas CSS, un gráfico de Canvas interactivo y tarjetas animadas crea un flujo dinámico y atractivo, optimizado para la comprensión sin sobrecargar al usuario. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A192F; /* Azul oscuro corporativo */
+            color: #CCD6F6; /* Color de texto base claro */
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 320px;
+            width: 100%;
+            max-width: 320px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-width: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #FFCD00; /* Amarillo corporativo */
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .card-bg {
+            background-color: #112240; /* Fondo para tarjetas */
+            border: 1px solid #1E2D4B;
+        }
+        .text-yellow-corp {
+            color: #FFCD00;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-[#0A192F]/80 backdrop-blur-lg sticky top-0 z-50 shadow-md shadow-black/20">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="text-xl font-extrabold text-white">Banco de Bogotá</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#oportunidad" class="nav-link text-slate-300 hover:text-white font-semibold">Oportunidad</a>
+                <a href="#solucion" class="nav-link text-slate-300 hover:text-white font-semibold">Solución</a>
+                <a href="#validacion" class="nav-link text-slate-300 hover:text-white font-semibold">Resultados</a>
+                <a href="#impacto" class="nav-link text-slate-300 hover:text-white font-semibold">Impacto</a>
+                <a href="#futuro" class="nav-link text-slate-300 hover:text-white font-semibold">Futuro</a>
+            </div>
+            <div class="md:hidden">
+                <!-- Mobile menu can be added here if needed -->
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    Revolucionando la Experiencia del Cliente con un
+                    <span class="block text-yellow-corp">Asistente Virtual Inteligente</span>
+                </h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-300">
+                    Una iniciativa del equipo de Onboarding para transformar las interacciones digitales, ofreciendo respuestas precisas y generando valor real para el negocio.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 1: Oportunidad -->
+        <section id="oportunidad" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight text-white">El Punto de Partida: Nuestra Oportunidad</h2>
+                    <p class="mt-4 text-lg text-slate-300">Identificamos una limitación clave en nuestro chat de consulta existente.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+                    <div class="card-bg p-8 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-bold text-red-400 mb-4">El Sistema Anterior</h3>
+                        <p class="text-slate-300">El chat operaba con un sistema de **intenciones predefinidas**. Esto significaba que las respuestas eran limitadas y no siempre podían resolver la variedad de consultas de nuestros usuarios, restringiendo nuestra capacidad de entender sus necesidades reales.</p>
+                    </div>
+                    <div class="text-center text-5xl text-yellow-corp font-bold hidden md:block">
+                        →
+                    </div>
+                    <div class="card-bg p-8 rounded-xl shadow-lg">
+                         <h3 class="text-xl font-bold text-green-400 mb-4">La Evolución Necesaria</h3>
+                        <p class="text-slate-300">Necesitábamos una solución más dinámica y inteligente que pudiera **comprender y responder** de manera abierta, mejorando la experiencia del cliente y abriendo nuevas oportunidades para el banco.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Solución -->
+        <section id="solucion" class="py-16 md:py-24 bg-[#0F213E]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight text-white">La Solución: Un Asistente Potenciado por IA</h2>
+                    <p class="mt-4 text-lg text-slate-300">Desarrollamos una solución innovadora para transformar la interacción.</p>
+                </div>
+                <div class="max-w-5xl mx-auto">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-center">
+                        <div class="card-bg p-6 rounded-lg shadow-md w-full md:w-1/3">
+                            <span class="text-4xl">📚</span>
+                            <h4 class="font-bold text-white mt-2">Portal Público</h4>
+                            <p class="text-sm text-slate-400">Toda la información oficial del banco.</p>
+                        </div>
+                        <div class="text-3xl font-bold text-yellow-corp">↓</div>
+                        <div class="card-bg p-6 rounded-lg shadow-md w-full md:w-1/3">
+                            <span class="text-4xl">🧠</span>
+                            <h4 class="font-bold text-white mt-2">Motor de IA</h4>
+                            <p class="text-sm text-slate-400">Procesa y comprende la información en tiempo real.</p>
+                        </div>
+                        <div class="text-3xl font-bold text-yellow-corp">↓</div>
+                        <div class="card-bg p-6 rounded-lg shadow-md w-full md:w-1/3">
+                            <span class="text-4xl">💬</span>
+                            <h4 class="font-bold text-white mt-2">Respuestas Precisas</h4>
+                            <p class="text-sm text-slate-400">El cliente recibe información contextualizada y veraz.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <p class="text-slate-300 max-w-2xl mx-auto"><strong class="text-yellow-corp">Beneficio clave:</strong> Este sistema crea una "fuente única de verdad", garantizando la veracidad y obligándonos a mantener nuestros datos públicos siempre actualizados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Validación -->
+        <section id="validacion" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight text-white">Validación: El Cliente le da Valor a la IA</h2>
+                    <p class="mt-4 text-lg text-slate-300">Realizamos un experimento para medir la aceptación del asistente. Los resultados fueron contundentes.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="card-bg p-8 rounded-xl shadow-lg">
+                        <h3 class="font-bold text-xl mb-4 text-center text-white">Distribución de Consultas</h3>
+                        <div class="chart-container">
+                            <canvas id="userIntentChart"></canvas>
+                        </div>
+                        <p class="text-sm text-slate-400 text-center mt-4">El gráfico muestra las principales intenciones de los usuarios durante el experimento.</p>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="card-bg p-6 rounded-xl shadow-lg">
+                            <h4 class="font-semibold text-lg text-white">Resolución de Problemas</h4>
+                            <p class="text-slate-300 mt-2">El <strong class="text-3xl font-extrabold text-yellow-corp">57%</strong> de los usuarios lo utilizó para resolver dudas o problemas con sus productos actuales, validando su rol como herramienta de soporte eficaz.</p>
+                        </div>
+                        <div class="card-bg p-6 rounded-xl shadow-lg">
+                            <h4 class="font-semibold text-lg text-white">Oportunidades de Negocio</h4>
+                            <p class="text-slate-300 mt-2">Se identificaron <strong data-count="392" class="counter text-3xl font-extrabold text-yellow-corp">0</strong> mensajes con potencial directo de colocación de productos. El asistente no solo resuelve, también vende.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Impacto -->
+        <section id="impacto" class="py-16 md:py-24 bg-[#0F213E]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight text-white">Impacto Estratégico y Beneficios</h2>
+                    <p class="mt-4 text-lg text-slate-300">Un proyecto con impacto transversal en toda la organización.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card-bg p-8 rounded-xl transition-transform transform hover:scale-105 hover:shadow-xl hover:shadow-black/20">
+                        <span class="text-5xl">💸</span>
+                        <h3 class="text-xl font-bold mt-4 text-white">Costo-Eficiencia</h3>
+                        <p class="mt-2 text-slate-300">Ahorro proyectado de hasta <strong class="text-yellow-corp">5 veces</strong> el costo operativo en comparación con canales de consulta tradicionales como Call Center u oficinas.</p>
+                    </div>
+                    <div class="card-bg p-8 rounded-xl transition-transform transform hover:scale-105 hover:shadow-xl hover:shadow-black/20">
+                        <span class="text-5xl">😃</span>
+                        <h3 class="text-xl font-bold mt-4 text-white">Cliente Externo</h3>
+                        <p class="mt-2 text-slate-300">Acceso inmediato a información veraz 24/7 y una mejora significativa en la experiencia de autoservicio y resolución de inquietudes.</p>
+                    </div>
+                    <div class="card-bg p-8 rounded-xl transition-transform transform hover:scale-105 hover:shadow-xl hover:shadow-black/20 md:col-span-2 lg:col-span-1">
+                        <span class="text-5xl">🤝</span>
+                        <h3 class="text-xl font-bold mt-4 text-white">Cliente Interno</h3>
+                        <p class="mt-2 text-slate-300">Una herramienta de apoyo fundamental para nuestros colaboradores, permitiendo a los agentes de Call Center, por ejemplo, dar respuestas más rápidas y precisas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Futuro -->
+        <section id="futuro" class="py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl font-bold tracking-tight text-white">Visión y Siguientes Pasos</h2>
+                 <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">Nuestra hoja de ruta es clara y ambiciosa, buscando siempre la mejora continua.</p>
+                 <div class="mt-12 flex flex-col md:flex-row justify-center gap-6 max-w-4xl mx-auto">
+                    <div class="card-bg p-6 rounded-lg shadow-md flex-1">
+                        <h4 class="font-bold text-yellow-corp">Expandir</h4>
+                        <p class="text-slate-300 mt-2">Ampliar las capacidades de consulta del asistente.</p>
+                    </div>
+                    <div class="card-bg p-6 rounded-lg shadow-md flex-1">
+                        <h4 class="font-bold text-yellow-corp">Integrar</h4>
+                        <p class="text-slate-300 mt-2">Incorporar nuevos flujos de información, incluyendo datos transaccionales.</p>
+                    </div>
+                     <div class="card-bg p-6 rounded-lg shadow-md flex-1">
+                        <h4 class="font-bold text-yellow-corp">Optimizar</h4>
+                        <p class="text-slate-300 mt-2">Mejorar continuamente el motor de IA para anticipar las necesidades del cliente.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-black/30 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Banco de Bogotá. Todos los derechos reservados.</p>
+            <p class="text-sm text-slate-400 mt-2">Iniciativa de la Tribu de Canales Digitales.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Chart.js: User Intent Donut Chart
+            const ctx = document.getElementById('userIntentChart').getContext('2d');
+            const userIntentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Resolución de Dudas', 'Búsqueda de Productos', 'Otros'],
+                    datasets: [{
+                        label: 'Intención de Usuario',
+                        data: [57, 21, 22], // 57 + 21 = 78. 100-78 = 22 for 'Otros'
+                        backgroundColor: [
+                            '#0057B8', // Azul corporativo
+                            '#FFCD00', // Amarillo corporativo
+                            '#E30613'  // Rojo corporativo
+                        ],
+                        borderColor: '#112240', // Card background color
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#CCD6F6', // Light text color for legend
+                                padding: 20,
+                                font: {
+                                    family: "'Inter', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            bodyFont: {
+                                family: "'Inter', sans-serif",
+                            },
+                            titleFont: {
+                                family: "'Inter', sans-serif",
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Animated Counter
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200; 
+
+            const animateCounter = (counter) => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-count');
+                    const count = +counter.innerText;
+
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            };
+            
+            const observerOptions = {
+                root: null,
+                threshold: 0.5
+            };
+
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+
+
+            // Active Nav Link on Scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+            
+            // Define custom utility for Tailwind
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .text-yellow-corp { color: #FFCD00; }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+
+</body>
+</html>
